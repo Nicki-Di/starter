@@ -10,12 +10,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Article {
-  id          Int      @id @default(autoincrement())
-  title       String   @unique
-  description String?
-  body        String
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model Users {
+  createdAt             DateTime        @default(now())
+  nationalId            String          @id
+  password              String
+  name                  String?
+  role                  String          @default("USER")
 }
