@@ -2,7 +2,6 @@ import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from '../auth.service';
-import { IdentifyUserDto } from '../../users/dto/identify-user.dto';
 import * as path from 'path';
 import Debug from 'debug';
 
