@@ -4,6 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import * as path from 'path';
 import Debug from 'debug';
+import { UserEntity } from './entities/user.entity';
 
 const debug = new Debug(`tag:${path.basename(__filename)}`);
 
@@ -11,7 +12,7 @@ const debug = new Debug(`tag:${path.basename(__filename)}`);
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  async findOne(username: string) {
+  async findOne(username: string): Promise<UserEntity> {
     return await this.prisma.users.findUnique({ where: { username } });
   }
 

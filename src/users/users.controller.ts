@@ -1,7 +1,6 @@
 import { Controller, Post, Body, Get } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { CreateUserValidatorPipe } from './validation.pipe';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
@@ -19,9 +18,7 @@ export class UsersController {
   // }
 
   @Post('/create')
-  async create(
-    @Body(new CreateUserValidatorPipe()) CreateUserDto: CreateUserDto,
-  ) {
+  async create(@Body() CreateUserDto: CreateUserDto) {
     try {
       return await this.usersService.create(CreateUserDto);
     } catch (error) {

@@ -12,7 +12,7 @@ import * as path from 'path';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 const debug = new Debug(`tag:${path.basename(__filename)}`);
 
@@ -21,14 +21,15 @@ const debug = new Debug(`tag:${path.basename(__filename)}`);
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard) // this uses strategies/local.strategy.ts under-the-hood
   @Post('/login')
+  @UseGuards(LocalAuthGuard) // this uses strategies/local.strategy.ts under-the-hood
   login(@Body() IdentifyUserDto: IdentifyUserDto, @Request() req) {
     return this.authService.login(req.user);
   }
 
-  @UseGuards(JwtAuthGuard) // this uses strategies/local.jwt.ts under-the-hood
   @Get('jwtProtected')
+  @ApiBearerAuth('access_token')
+  @UseGuards(JwtAuthGuard) // this uses strategies/jwt.strategy.ts under-the-hood
   getProfile(@Request() req) {
     return req.user;
   }
